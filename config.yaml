@@ -1,0 +1,45 @@
+# Smart-working scheduler configuration
+#
+# max_smart_per_week = X in the company policy: the HARD weekly cap on
+#     remote days. Nobody is ever scheduled above it.
+# min_smart_per_week = smart-days target per week (default 0, SOFT): if the
+#     target cannot be reached, the affected person accrues fairness credit
+#     instead of blocking the schedule.
+#     - leave it at 0:                smart days CAN be taken (0 up to the max)
+#     - set it equal to the max:      smart days SHOULD be exactly that many
+# desks              = M (desks available for the team)
+#
+# For each member:
+#   desired_smart_days:    days they would PREFER to work remotely (optional)
+#   mandatory_office_days: days they MUST be in the office (hard constraint, optional)
+#   min_smart_days:        per-person target override (optional, soft)
+#   max_smart_days:        per-person maximum override (optional, soft: can be
+#                          exceeded under desk pressure, with credit, but never
+#                          beyond the company-wide max_smart_per_week)
+# Valid days: mon, tue, wed, thu, fri
+
+max_smart_per_week: 2
+min_smart_per_week: 0
+desks: 4
+state_file: state.json
+
+members:
+  - name: Marco
+    desired_smart_days: [mon, fri]
+
+  - name: Giulia
+    desired_smart_days: [mon, fri]
+    mandatory_office_days: [tue]   # team meeting
+
+  - name: Sara
+    desired_smart_days: [wed]
+
+  - name: Luca
+    max_smart_days: 0              # prefers no smart (can be forced, with credit)
+
+  - name: Elena
+    desired_smart_days: [mon, fri]
+    min_smart_days: 2              # target of 2 smart days (soft)
+
+  - name: Andrea
+    mandatory_office_days: [mon, thu]
